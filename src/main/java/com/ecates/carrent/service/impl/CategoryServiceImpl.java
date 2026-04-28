@@ -7,9 +7,11 @@ import com.ecates.carrent.entity.Category;
 import com.ecates.carrent.mapper.CategoryMapper;
 import com.ecates.carrent.repository.CategoryRepository;
 import com.ecates.carrent.service.CategoryService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
