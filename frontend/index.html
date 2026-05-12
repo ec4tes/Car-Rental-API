@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rent Panel</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="page-shell">
+    <aside class="sidebar">
+        <div>
+            <p class="eyebrow">ECATES FLEET</p>
+            <h1>Car Rent Admin</h1>
+            <p class="sidebar-copy">
+                Backend'in icin ayri bir yonetim paneli. Tum temel varliklari tek yerden yonetebilirsin.
+            </p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#overview">Genel Bakis</a>
+            <a href="#brands">Markalar</a>
+            <a href="#categories">Kategoriler</a>
+            <a href="#cars">Araclar</a>
+            <a href="#customers">Musteriler</a>
+            <a href="#rentals">Kiralamalar</a>
+        </nav>
+
+        <div class="connection-card">
+            <label for="apiBase">API Base URL</label>
+            <div class="connection-row">
+                <input id="apiBase" type="text" placeholder="http://localhost:8080/api/v1">
+                <button id="saveApiBase" type="button" class="ghost-button">Kaydet</button>
+            </div>
+            <p class="hint">Varsayilan adres: `http://localhost:8080/api/v1`</p>
+            <a id="swaggerLink" href="http://localhost:8080/swagger-ui.html" target="_blank" rel="noreferrer">Swagger'i ac</a>
+        </div>
+    </aside>
+
+    <main class="content">
+        <section id="overview" class="hero">
+            <div>
+                <p class="eyebrow">AYRI FRONTEND</p>
+                <h2>Arac kiralama backend'in icin duzgun bir vitrin</h2>
+                <p class="hero-copy">
+                    Bu ekran marka, kategori, arac, musteri ve kiralama kayitlarini canli olarak Spring Boot API'ndan ceker.
+                </p>
+            </div>
+            <div class="hero-actions">
+                <button id="refreshAll" type="button" class="primary-button">Tum verileri yenile</button>
+                <span id="statusBadge" class="status-badge neutral">Hazir</span>
+            </div>
+        </section>
+
+        <section class="stats-grid">
+            <article class="stat-card">
+                <span>Marka</span>
+                <strong id="brandCount">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Kategori</span>
+                <strong id="categoryCount">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Arac</span>
+                <strong id="carCount">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Musteri</span>
+                <strong id="customerCount">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Kiralama</span>
+                <strong id="rentalCount">0</strong>
+            </article>
+        </section>
+
+        <section id="brands" class="panel-grid">
+            <article class="panel-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">MARKA YONETIMI</p>
+                        <h3>Marka ekle veya guncelle</h3>
+                    </div>
+                </div>
+                <form id="brandForm" class="entity-form">
+                    <input id="brandId" type="hidden">
+                    <label for="brandName">Marka Adi</label>
+                    <input id="brandName" name="name" type="text" placeholder="Ornek: BMW" required>
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Kaydet</button>
+                        <button id="resetBrandForm" type="button" class="ghost-button">Temizle</button>
+                    </div>
+                </form>
+            </article>
+            <article class="panel-card table-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">LISTE</p>
+                        <h3>Markalar</h3>
+                    </div>
+                </div>
+                <div id="brandTable" class="table-shell"></div>
+            </article>
+        </section>
+
+        <section id="categories" class="panel-grid">
+            <article class="panel-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">KATEGORI YONETIMI</p>
+                        <h3>Kategori ekle veya guncelle</h3>
+                    </div>
+                </div>
+                <form id="categoryForm" class="entity-form">
+                    <input id="categoryId" type="hidden">
+                    <label for="categoryName">Kategori Adi</label>
+                    <input id="categoryName" name="name" type="text" placeholder="Ornek: SUV" required>
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Kaydet</button>
+                        <button id="resetCategoryForm" type="button" class="ghost-button">Temizle</button>
+                    </div>
+                </form>
+            </article>
+            <article class="panel-card table-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">LISTE</p>
+                        <h3>Kategoriler</h3>
+                    </div>
+                </div>
+                <div id="categoryTable" class="table-shell"></div>
+            </article>
+        </section>
+
+        <section id="cars" class="panel-grid">
+            <article class="panel-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">ARAC YONETIMI</p>
+                        <h3>Arac ekle veya guncelle</h3>
+                    </div>
+                </div>
+                <form id="carForm" class="entity-form">
+                    <input id="carId" type="hidden">
+                    <label for="carModel">Model</label>
+                    <input id="carModel" name="model" type="text" placeholder="Ornek: Corolla" required>
+
+                    <label for="carPlateNumber">Plaka</label>
+                    <input id="carPlateNumber" name="plateNumber" type="text" placeholder="34 ABC 123" required>
+
+                    <div class="two-column">
+                        <div>
+                            <label for="carYear">Yil</label>
+                            <input id="carYear" name="year" type="number" min="2000" max="2099" required>
+                        </div>
+                        <div>
+                            <label for="carDailyPrice">Gunluk Ucret</label>
+                            <input id="carDailyPrice" name="dailyPrice" type="number" min="1" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <label for="carBrandId">Marka</label>
+                    <select id="carBrandId" name="brandId" required></select>
+
+                    <label for="carCategoryId">Kategori</label>
+                    <select id="carCategoryId" name="categoryId" required></select>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Kaydet</button>
+                        <button id="resetCarForm" type="button" class="ghost-button">Temizle</button>
+                    </div>
+                </form>
+            </article>
+            <article class="panel-card table-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">LISTE</p>
+                        <h3>Araclar</h3>
+                    </div>
+                </div>
+                <div id="carTable" class="table-shell"></div>
+            </article>
+        </section>
+
+        <section id="customers" class="panel-grid">
+            <article class="panel-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">MUSTERI YONETIMI</p>
+                        <h3>Musteri ekle veya guncelle</h3>
+                    </div>
+                </div>
+                <form id="customerForm" class="entity-form">
+                    <input id="customerId" type="hidden">
+                    <div class="two-column">
+                        <div>
+                            <label for="customerFirstName">Ad</label>
+                            <input id="customerFirstName" name="firstName" type="text" required>
+                        </div>
+                        <div>
+                            <label for="customerLastName">Soyad</label>
+                            <input id="customerLastName" name="lastName" type="text" required>
+                        </div>
+                    </div>
+
+                    <label for="customerEmail">E-posta</label>
+                    <input id="customerEmail" name="email" type="email" required>
+
+                    <div class="two-column">
+                        <div>
+                            <label for="customerPhoneNumber">Telefon</label>
+                            <input id="customerPhoneNumber" name="phoneNumber" type="text" maxlength="11" required>
+                        </div>
+                        <div>
+                            <label for="customerDriverLicenseNumber">Ehliyet No</label>
+                            <input id="customerDriverLicenseNumber" name="driverLicenseNumber" type="text" minlength="10" maxlength="15" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Kaydet</button>
+                        <button id="resetCustomerForm" type="button" class="ghost-button">Temizle</button>
+                    </div>
+                </form>
+            </article>
+            <article class="panel-card table-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">LISTE</p>
+                        <h3>Musteriler</h3>
+                    </div>
+                </div>
+                <div id="customerTable" class="table-shell"></div>
+            </article>
+        </section>
+
+        <section id="rentals" class="panel-grid">
+            <article class="panel-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">KIRALAMA YONETIMI</p>
+                        <h3>Yeni kiralama olustur</h3>
+                    </div>
+                </div>
+                <form id="rentalForm" class="entity-form">
+                    <label for="rentalCustomerId">Musteri</label>
+                    <select id="rentalCustomerId" name="customerId" required></select>
+
+                    <label for="rentalCarId">Arac</label>
+                    <select id="rentalCarId" name="carId" required></select>
+
+                    <div class="two-column">
+                        <div>
+                            <label for="rentalStartDate">Baslangic</label>
+                            <input id="rentalStartDate" name="startDate" type="date" required>
+                        </div>
+                        <div>
+                            <label for="rentalEndDate">Bitis</label>
+                            <input id="rentalEndDate" name="endDate" type="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Kiralamayi kaydet</button>
+                        <button id="resetRentalForm" type="button" class="ghost-button">Temizle</button>
+                    </div>
+                </form>
+            </article>
+            <article class="panel-card table-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">LISTE</p>
+                        <h3>Kiralamalar</h3>
+                    </div>
+                </div>
+                <div id="rentalTable" class="table-shell"></div>
+            </article>
+        </section>
+    </main>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="./app.js"></script>
+</body>
+</html>

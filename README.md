@@ -1,53 +1,50 @@
-# Car Rental API
+# Car Rent Workspace
 
-This project is a simple backend application developed using Spring Boot for managing a car rental system.
+Bu repo artik iki net parcaya ayrildi:
 
-## Features
+- `backend/`: Spring Boot REST API
+- `frontend/`: API'ye baglanan bagimsiz yonetim paneli
 
-* Customer management (create, update, delete, list)
-* Car management
-* Basic rental operations
-* RESTful API structure
+## Klasor Yapisi
 
-## Technologies
-
-* Java
-* Spring Boot
-* Spring Data JPA
-* PostgreSQL
-* Maven
-
-## Project Structure
-
-* Controller layer: Handles HTTP requests
-* Service layer: Contains business logic
-* Repository layer: Database operations
-* Entity layer: Database models
-
-## Getting Started
-
-1. Clone the repository:
-
-```
-git clone https://github.com/your-username/car-rental-api.git
+```text
+car-rent/
+|-- backend/
+|-- frontend/
+|-- .gitignore
+|-- .gitattributes
 ```
 
-2. Navigate to the project directory:
+## Backend'i Calistirma
 
-```
-cd car-rental-api
-```
-
-3. Run the application:
-
-```
+```powershell
+cd backend
 mvn spring-boot:run
 ```
 
-## API Testing
+Swagger:
 
-You can test endpoints using tools like Postman or Swagger.
+```text
+http://localhost:8080/swagger-ui.html
+```
 
-## Notes
+## Frontend'i Calistirma
 
-This project is built for learning purposes and may be improved over time.
+Statik bir server yeterli:
+
+```powershell
+cd frontend
+python -m http.server 5500
+```
+
+Ardindan:
+
+```text
+http://localhost:5500
+```
+
+Frontend varsayilan olarak `http://localhost:8080/api/v1` adresine baglanir.
+
+Not:
+
+`mvnw.cmd` bu Codex kabugunda dogrulanamadi; bu nedenle calisan komut olarak sistemde kurulu `mvn` kullanildi.
