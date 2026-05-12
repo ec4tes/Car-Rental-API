@@ -60,4 +60,14 @@ public class CarController {
         return ResponseEntity.ok(carPage);
     }
 
+    @GetMapping("/brarnd")
+    public ResponseEntity<Page<CarResponseDto>> getCarsByBrandName(
+            @RequestParam String brandName,
+            @RequestParam (defaultValue = "0") int page,
+            @RequestParam (defaultValue = "5") int size
+    ){
+        Page<CarResponseDto> cars = carService.getCarsByBrandName(brandName, page, size);
+        return ResponseEntity.ok(cars);
+    }
+
 }

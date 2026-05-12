@@ -19,5 +19,6 @@ public interface CarService {
 
     Page<CarResponseDto> getCarPage(int page, int size);
 
+    Page<CarResponseDto> getCarsByBrandName(String brandName, int page, int size);
 
 }

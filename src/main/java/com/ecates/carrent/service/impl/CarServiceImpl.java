@@ -167,4 +167,13 @@ public class CarServiceImpl implements CarService {
         Page<Car> cars = carRepository.findAll(pageable);
         return cars.map(carMapper::toCarResponseDto);
     }
+
+    @Override
+    public Page<CarResponseDto> getCarsByBrandName(String brandName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Car> cars = carRepository.findCarsByBrandName(brandName, pageable);
+
+        return cars.map(carMapper::toCarResponseDto);
+    }
 }
