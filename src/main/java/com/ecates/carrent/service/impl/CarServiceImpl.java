@@ -10,6 +10,9 @@ import com.ecates.carrent.repository.BrandRepository;
 import com.ecates.carrent.repository.CarRepository;
 import com.ecates.carrent.repository.CategoryRepository;
 import com.ecates.carrent.service.CarService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -156,5 +159,12 @@ public class CarServiceImpl implements CarService {
     public void deleteCar(Long id) {
         Car car = findCarByIdOrThrow(id);
         carRepository.delete(car);
+    }
+
+    @Override
+    public Page<CarResponseDto> getCarPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Car> cars = carRepository.findAll(pageable);
+        return cars.map(carMapper::toCarResponseDto);
     }
 }
