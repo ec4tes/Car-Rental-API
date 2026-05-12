@@ -160,7 +160,6 @@ public class CarServiceImpl implements CarService {
         Car car = findCarByIdOrThrow(id);
         carRepository.delete(car);
     }
-
     @Override
     public Page<CarResponseDto> getCarPage(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
