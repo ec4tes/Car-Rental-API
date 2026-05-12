@@ -4,6 +4,7 @@ import com.ecates.carrent.dto.request.CarRequestDto;
 import com.ecates.carrent.dto.response.CarResponseDto;
 import com.ecates.carrent.service.CarService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,4 +54,10 @@ public class CarController {
         carService.deleteCar(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/page")
+    public ResponseEntity<Page<CarResponseDto>> getCarsPage(@RequestParam (defaultValue = "0") int page, @RequestParam (defaultValue = "5") int size){
+        Page<CarResponseDto> carPage = carService.getCarPage(page, size);
+        return ResponseEntity.ok(carPage);
+    }
+
 }
